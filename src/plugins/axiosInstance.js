@@ -2,20 +2,25 @@ import axios from 'axios'
 import Vue from 'vue'
 
 const options = {
-  baseURL: ''
+  baseURL: 'https://pre.ugoloc.ucann.ru'
 }
 
 const instance = axios.create(options)
 
 instance.interceptors.request.use(config => {
-  const token = this.$cookie.get('token')
-  if (token) {
-    // eslint-disable-next-line
-    config.headers.common['Authorization'] = `Bearer ${token}`
+  try {
+    const token = Vue.$cookie.get('token')
+    if (token) {
+      // eslint-disable-next-line
+      config.headers.common['Authorization'] = `Bearer ${token}`
+    }
+  } catch (err) {
+  } finally {
+    // eslint-disable-next-line no-unsafe-finally
+    return config
   }
-  return config
 }, error => Promise.reject(error))
-instance.interceptors.response.use(response => response, error => {
+instance.interceptors.response.use(response => response.data, error => {
   const { response } = error
   if (response) {
     switch (response.status) {
@@ -40,4 +45,3 @@ Plugin.install = Vue => {
 Vue.use(Plugin)
 
 export default Plugin
-

@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import cookie from 'cookie'
+import VueCookie from 'vue-cookie'
 
-Vue.use(cookie)
+Vue.use(VueCookie)

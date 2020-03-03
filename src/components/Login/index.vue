@@ -19,6 +19,7 @@ export default {
   name: 'loginComponent',
   data () {
     return {
+      loginURL: '/api/auth/login',
       form: {
         name: '',
         password: ''
@@ -26,7 +27,16 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    async onSubmit () {
+      const { data } = await this.$http.post(this.loginURL, {
+        login: this.form.name,
+        password: this.form.password
+      })
+      console.log(data.access_token)
+      // eslint-disable-next-line camelcase
+      if (data.access_token) {
+        this.$cookie.set('token', data.access_token)
+      }
     }
   }
 }
