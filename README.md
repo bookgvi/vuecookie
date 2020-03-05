@@ -1,4 +1,4 @@
-# vuecookies
+# vuecookies - сохранение токена в куках)
 
 ## Project setup
 ```
