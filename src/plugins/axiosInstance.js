@@ -26,7 +26,13 @@ instance.interceptors.response.use(response => response.data, error => {
     switch (response.status) {
       case 401:
       case 403:
-        this.$cookie.delete('token')
+        try {
+          this.$cookie.delete('token')
+        } catch (err) {
+        } finally {
+        // eslint-disable-next-line no-unsafe-finally
+        break
+      }
       // TODO переход на страницу /login
     }
   }
